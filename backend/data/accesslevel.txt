@@ -1,0 +1,15 @@
+064aff64-a66e-40ce-97f7-fcedc5b2d26a|staff15|operator
+2a67e500-8d4e-41e4-a661-9f69fb020348|staff8|manager
+359dc62d-909f-4aa3-abab-66edd9a1e88b|staff11|viewer
+431876d4-41e0-454e-93f0-b0c86da7058c|staff7|admin
+4655b718-c4a9-4f85-bda0-0808356beb93|staff1|admin
+4708e397-0316-406c-bd2b-4dc8a39e3165|staff6|custom
+4f69a9b3-a352-41f0-975c-49714d23b27a|staff9|operator
+50fa407a-474b-49fe-96a8-0d37fc7705fc|staff13|admin
+5d6f334a-c5f6-4783-a3d1-5989509478e7|staff14|manager
+7e71896c-291b-4c7c-af46-44ec4913fbb6|staff4|operator
+984c4392-8284-4886-8ec7-d5a988d9d2a6|staff3|operator
+ef1cf433-a2f6-4c75-a35a-65847e79ebf9|staff12|custom
+f3c29d11-dda5-490b-b84c-9833706cf815|staff2|manager
+f545040b-1018-4c9a-a2d0-c6ec11b54269|staff10|operator
+ff433383-793d-4bce-8fcf-a0b2e1ba0735|staff5|viewer

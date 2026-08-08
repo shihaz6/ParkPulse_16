@@ -217,7 +217,7 @@ public class ParkingServiceImpl implements ParkingService {
     public double getRatePerHourForSlot(String slotId) {
         String prefix = extractPrefix(slotId);
         Zone zone = zoneService.getZoneByPrefix(prefix);
-        return zone != null && zone.getRatePerHour() > 0 ? zone.getRatePerHour() : 10.0;
+        return zone != null && zone.getRatePerHour() > 0 ? zone.getRatePerHour() : 150.0;
     }
 
     private String extractPrefix(String slotId) {

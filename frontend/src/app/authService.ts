@@ -1,4 +1,5 @@
 import { apiRequest } from './api';
+import type { MemberVehicle } from './memberService';
 
 export interface LoginResponse {
   token: string;
@@ -12,6 +13,8 @@ export interface LoginResponse {
   status?: string;
   joinedDate?: string;
   vehicles?: number;
+  vehicleList?: MemberVehicle[];
+  qrCode?: string;
   billingCycle?: string;
   nextRenewalDate?: string;
   daysRemaining?: number;
@@ -36,6 +39,8 @@ export async function login(username: string, password: string): Promise<LoginRe
     if (data.status) localStorage.setItem('memberStatus', data.status);
     if (data.joinedDate) localStorage.setItem('memberJoinedDate', data.joinedDate);
     if (data.vehicles !== undefined) localStorage.setItem('memberVehicles', String(data.vehicles));
+    if (data.vehicleList) localStorage.setItem('memberVehicleList', JSON.stringify(data.vehicleList));
+    if (data.qrCode) localStorage.setItem('memberQrCode', data.qrCode);
     if (data.billingCycle) localStorage.setItem('memberBillingCycle', data.billingCycle);
     if (data.nextRenewalDate) localStorage.setItem('memberNextRenewalDate', data.nextRenewalDate);
     if (data.daysRemaining !== undefined) localStorage.setItem('memberDaysRemaining', String(data.daysRemaining));
@@ -45,7 +50,7 @@ export async function login(username: string, password: string): Promise<LoginRe
 }
 
 export function logout() {
-  ['token', 'username', 'role', 'access', 'permissions', 'memberName', 'memberEmail', 'memberPlan', 'memberStatus', 'memberJoinedDate', 'memberVehicles', 'memberBillingCycle', 'memberNextRenewalDate', 'memberDaysRemaining'].forEach(k => localStorage.removeItem(k));
+  ['token', 'username', 'role', 'access', 'permissions', 'memberName', 'memberEmail', 'memberPlan', 'memberStatus', 'memberJoinedDate', 'memberVehicles', 'memberVehicleList', 'memberQrCode', 'memberBillingCycle', 'memberNextRenewalDate', 'memberDaysRemaining'].forEach(k => localStorage.removeItem(k));
   window.location.reload();
 }
 

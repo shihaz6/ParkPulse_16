@@ -1,4 +1,5 @@
 com\parkpulse\settings\service\AccessControlSettingsService.class
+com\parkpulse\dto\ReportDTO.class
 com\parkpulse\member\repository\SpringDataMemberRepository.class
 com\parkpulse\service\ReportServiceImpl.class
 com\parkpulse\member\repository\SqlMemberRepository.class
@@ -56,7 +57,9 @@ com\parkpulse\member\repository\FileMemberRepository.class
 com\parkpulse\settings\model\AccessControlSettings.class
 com\parkpulse\staff\repository\SqlStaffRepository.class
 com\parkpulse\ticket\model\Ticket$1.class
+com\parkpulse\reservation\service\ReservationService.class
 com\parkpulse\member\service\QrCodeService.class
+com\parkpulse\reservation\model\ReservationStatus.class
 com\parkpulse\model\AbstractEntity.class
 com\parkpulse\ticket\model\Motorcycle.class
 com\parkpulse\settings\service\ZoneSettingsService.class
@@ -67,6 +70,7 @@ com\parkpulse\service\UserService.class
 com\parkpulse\parking\model\Zone.class
 com\parkpulse\service\SettingsServiceImpl.class
 com\parkpulse\ticket\model\Vehicle.class
+com\parkpulse\reservation\repository\ReservationRepository.class
 com\parkpulse\BackendApplication.class
 com\parkpulse\controller\AuthController.class
 com\parkpulse\service\ChatServiceImpl.class
@@ -79,6 +83,7 @@ com\parkpulse\settings\repository\ZoneSettingsRepository.class
 com\parkpulse\ticket\repository\SpringDataTicketRepository.class
 com\parkpulse\member\service\MemberService.class
 com\parkpulse\parking\repository\SqlZoneRepository.class
+com\parkpulse\reservation\repository\SqlReservationRepository.class
 com\parkpulse\ticket\model\Ticket.class
 com\parkpulse\repository\GeneralSettingsRepository.class
 com\parkpulse\controller\ReportController.class
@@ -96,14 +101,18 @@ com\parkpulse\exception\DataStorageException.class
 com\parkpulse\ticket\service\TicketService.class
 com\parkpulse\parking\repository\SpringDataZoneRepository.class
 com\parkpulse\parking\service\ZoneServiceImpl.class
+com\parkpulse\reservation\model\Reservation.class
 com\parkpulse\member\model\Member.class
 com\parkpulse\controller\SettingsController.class
 com\parkpulse\parking\controller\ZoneController.class
 com\parkpulse\parking\repository\SpringDataParkingSessionRepository.class
+com\parkpulse\dto\ReportStatsDTO.class
 com\parkpulse\service\AIServiceImpl.class
 com\parkpulse\security\JwtAuthenticationFilter.class
 com\parkpulse\staff\repository\FileStaffRepository.class
 com\parkpulse\service\UserServiceImpl.class
+com\parkpulse\reservation\controller\ReservationController.class
+com\parkpulse\reservation\repository\SpringDataReservationRepository.class
 com\parkpulse\config\SecurityConfig.class
 com\parkpulse\member\service\PlanService.class
 com\parkpulse\parking\repository\ParkingSessionRepository.class
@@ -116,11 +125,14 @@ com\parkpulse\ticket\model\TicketStatus.class
 com\parkpulse\settings\service\AccessControlSettingsServiceImpl.class
 com\parkpulse\repository\SecuritySettingsRepository.class
 com\parkpulse\exception\InvalidReportException.class
+com\parkpulse\reservation\service\ReservationServiceImpl.class
+com\parkpulse\config\MockDataSeeder.class
 com\parkpulse\dto\CardValidationRequest.class
 com\parkpulse\model\GeneralSettings.class
 com\parkpulse\settings\controller\AccessControlSettingsController.class
 com\parkpulse\report\repository\SqlProblemReportRepository.class
 com\parkpulse\history\service\HistoryServiceImpl.class
+com\parkpulse\member\model\MemberVehicle.class
 com\parkpulse\staff\service\StaffServiceImpl.class
 com\parkpulse\security\JwtUtil.class
 com\parkpulse\parking\repository\InMemoryParkingSlotRepository.class

@@ -16,7 +16,7 @@ export interface Reservation {
 }
 
 export const reservationService = {
-  createReservation: (data: { slotId: string; reservedFor: string; reservedForType: string; reservedForEmail: string }) =>
+  createReservation: (data: { slotId: string; reservedFor: string; reservedForType: string; reservedForEmail: string; plate?: string; vehicleType?: string }) =>
     apiRequest<Reservation>('/reservations', {
       method: 'POST',
       body: JSON.stringify(data),

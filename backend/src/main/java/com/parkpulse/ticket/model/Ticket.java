@@ -102,13 +102,13 @@ public class Ticket {
     }
 
     private double getDefaultRate() {
-        if (vehicleType == null) return 10.0;
+        if (vehicleType == null) return 150.0;
         switch (vehicleType) {
-            case SUV: return 15.0;
-            case MOTORCYCLE: return 5.0;
-            case TRUCK: return 20.0;
-            case VAN: return 12.0;
-            default: return 10.0;
+            case SUV: return 200.0;
+            case MOTORCYCLE: return 100.0;
+            case TRUCK: return 250.0;
+            case VAN: return 180.0;
+            default: return 150.0;
         }
     }
 }

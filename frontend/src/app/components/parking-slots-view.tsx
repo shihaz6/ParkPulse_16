@@ -47,6 +47,7 @@ interface PersonOption {
   role?: string;
   plan?: string;
   vehicleType?: string;
+  vehicleList?: { plate: string; vehicleType: string; make?: string; color?: string }[];
 }
 
 const VEHICLE_TYPES = ['Sedan', 'SUV', 'EV', 'Motorcycle', 'Truck', 'Coupe', 'Van', 'Accessible'];
@@ -122,6 +123,7 @@ function SlotDialog({
   const [entryType, setEntryType] = useState<'walkin' | 'member' | 'staff'>('walkin');
   const [selectedPerson, setSelectedPerson] = useState<PersonOption | null>(null);
   const [searchPerson, setSearchPerson] = useState('');
+  const [selectedMemberVehicle, setSelectedMemberVehicle] = useState(0);
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -153,6 +155,10 @@ function SlotDialog({
 
   const currentMember = members.find(m => m.email === memberEmail || m.name === profileName);
   const memberVehicleType = currentMember?.vehicleType || 'Sedan';
+  const memberVehicles = currentMember?.vehicleList && currentMember.vehicleList.length > 0
+    ? currentMember.vehicleList
+    : [{ plate: '', vehicleType: memberVehicleType, make: '', color: '' }];
+  const selectedVehicle = memberVehicles[Math.min(selectedMemberVehicle, memberVehicles.length - 1)];
   const parkPersonList = entryType === 'member' ? members : staff;
   const reserveTab = tab === 'park' ? entryType : tab;
   const personList = reserveTab === 'member' ? members : (reserveTab === 'staff' ? staff : []);
@@ -198,32 +204,63 @@ function SlotDialog({
               {isMember ? (
                 <div className="space-y-3">
                   <div>
-                    <label className="block text-sm text-muted-foreground mb-1.5">Plate Number <span className="text-red-500">*</span></label>
-                    <input value={plate} onChange={e => setPlate(e.target.value.toUpperCase())} placeholder="Enter your vehicle plate number"
-                      className={`w-full bg-background text-foreground rounded-xl px-4 py-2.5 outline-none border text-sm font-mono transition-colors placeholder:text-muted-foreground ${errors.plate ? 'border-red-500' : 'border-border focus:border-blue-500'}`} />
-                    {errors.plate && <p className="mt-1 text-xs text-red-500">{errors.plate}</p>}
+                    <label className="block text-sm text-muted-foreground mb-1.5">Select Vehicle</label>
+                    {memberVehicles.length === 0 ? (
+                      <p className="text-xs text-amber-500 px-4 py-3 bg-amber-500/10 rounded-xl border border-amber-500/20">
+                        You have no registered vehicles. Add one from your member profile to reserve a slot.
+                      </p>
+                    ) : (
+                      <div className="space-y-1.5 max-h-52 overflow-y-auto">
+                        {memberVehicles.map((v, idx) => {
+                          const selected = idx === selectedMemberVehicle;
+                          return (
+                            <button
+                              key={idx}
+                              type="button"
+                              onClick={() => setSelectedMemberVehicle(idx)}
+                              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl border text-left transition-all ${
+                                selected
+                                  ? 'bg-violet-500/10 border-violet-500/30 ring-1 ring-violet-500/20'
+                                  : 'border-border hover:bg-muted/50'
+                              }`}
+                            >
+                              <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 ${selected ? 'bg-violet-600' : 'bg-blue-600'}`}>
+                                <Car className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-medium truncate">{v.plate || 'New vehicle'}</p>
+                                <p className="text-xs text-muted-foreground truncate">
+                                  {v.vehicleType}{[v.make, v.color].filter(Boolean).length > 0 ? ` · ${[v.make, v.color].filter(Boolean).join(' · ')}` : ''}
+                                </p>
+                              </div>
+                              {selected && <CheckCircle2 className="w-4 h-4 flex-shrink-0 text-violet-500" />}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
                   <div className="flex gap-3 pt-1">
                     <button onClick={onClose} className="flex-1 px-4 py-2.5 rounded-xl border border-border text-sm hover:bg-muted/50 transition-colors text-muted-foreground">Cancel</button>
                     <button
                       onClick={() => {
-                        const e: Record<string, string> = {};
-                        if (!plate.trim()) e.plate = 'Plate number is required.';
-                        setErrors(e);
-                        if (Object.keys(e).length > 0) return;
-                        onPark({
-                          plate: plate.trim(),
-                          vehicleType: memberVehicleType,
-                          ownerName: profileName || '',
-                          phone: memberEmail || '',
-                          entryType: 'member',
+                        if (!selectedVehicle || !selectedVehicle.plate) { setErrors({ vehicle: 'Select a registered vehicle to reserve this slot.' }); return; }
+                        onReserve({
+                          reservedFor: profileName || currentMember?.name || '',
+                          reservedForType: 'member',
+                          reservedForEmail: memberEmail || currentMember?.email || '',
+                          vehicleType: selectedVehicle.vehicleType || 'Sedan',
+                          plate: selectedVehicle.plate,
+                          notes: `Reserved for ${profileName || currentMember?.name || 'member'}`,
                         });
                       }}
-                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium transition-colors"
+                      disabled={!selectedVehicle || !selectedVehicle.plate}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-sm font-medium transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                     >
-                      <Car className="w-4 h-4" /> Park Vehicle
+                      <BookMarked className="w-4 h-4" /> Reserve Slot
                     </button>
                   </div>
+                  {errors.vehicle && <p className="text-xs text-red-500">{errors.vehicle}</p>}
                 </div>
               ) : (
                 <>
@@ -470,15 +507,28 @@ function SlotDialog({
 
               <div className="flex gap-3">
                 <button onClick={onClose} className="flex-1 px-4 py-2.5 rounded-xl border border-border text-sm hover:bg-muted/50 transition-colors text-muted-foreground">Close</button>
-                <button 
-                  onClick={() => { if (onOpenCheckIn) onOpenCheckIn(slot); }}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium transition-colors">
-                  <Car className="w-4 h-4" /> Check-in Vehicle
-                </button>
-                <button onClick={onReleaseReservation}
-                  className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-medium transition-colors">
-                  <LogOut className="w-4 h-4" /> Release Reservation
-                </button>
+                {isMember ? (
+                  <>
+                    {slot.reservedForEmail === memberEmail && (
+                      <button onClick={onReleaseReservation}
+                        className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-medium transition-colors">
+                        <LogOut className="w-4 h-4" /> Cancel My Reservation
+                      </button>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <button 
+                      onClick={() => { if (onOpenCheckIn) onOpenCheckIn(slot); }}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium transition-colors">
+                      <Car className="w-4 h-4" /> Check-in Vehicle
+                    </button>
+                    <button onClick={onReleaseReservation}
+                      className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-red-500 hover:bg-red-600 text-white text-sm font-medium transition-colors">
+                      <LogOut className="w-4 h-4" /> Release Reservation
+                    </button>
+                  </>
+                )}
               </div>
             </>
           )}
@@ -1312,9 +1362,9 @@ function SlotsMap({
   const filteredSlots = search
     ? currentSlots.filter(s => s.id.toLowerCase().includes(search.toLowerCase()) || s.plate?.toLowerCase().includes(search.toLowerCase()))
     : currentSlots;
-  // Members see all slots but non-available ones shown in red with no details
+  // Members see non-available non-reserved slots as taken (no details)
   const displaySlots = isMember
-    ? filteredSlots.map(s => s.status === 'available' ? s : { ...s, status: 'occupied' as SlotStatus })
+    ? filteredSlots.map(s => s.status === 'reserved' ? s : s.status === 'available' ? s : { ...s, status: 'occupied' as SlotStatus })
     : filteredSlots;
 
   const handlePark = async (zIdx: number, slotId: string, data: Partial<SlotEntry>) => {
@@ -1375,7 +1425,7 @@ function SlotsMap({
       ownerName: dialogSlot.ownerName ?? '—',
       phone: dialogSlot.phone,
       entryTime: dialogSlot.entryTime ?? new Date(),
-      ratePerHour: parseFloat(zone?.ratePerHour ?? '10') || 10,
+      ratePerHour: parseFloat(zone?.ratePerHour ?? '150') || 150,
       currencySymbol,
     });
     setDialogSlot(null);
@@ -1438,14 +1488,13 @@ function SlotsMap({
   const handleReserve = async (data: Partial<SlotEntry>) => {
     if (!dialogSlot) return;
     try {
-      // Mark slot as reserved in parking_slots table
-      await parkingService.reserveSlot(dialogSlot.id);
-      // Create reservation record
+      // Create reservation record (backend marks the slot as reserved itself)
       const reservation = await reservationService.createReservation({
         slotId: dialogSlot.id,
         reservedFor: data.reservedFor || '',
         reservedForType: data.reservedForType || 'member',
         reservedForEmail: data.reservedForEmail || '',
+        plate: data.plate,
         vehicleType: data.vehicleType,
       });
       updateSlot(activeZoneIdx, dialogSlot.id, { ...data, status: 'reserved', reservationId: reservation.id });
@@ -1604,7 +1653,7 @@ function SlotsMap({
           <div className="flex items-center gap-4 text-xs text-muted-foreground">
             <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-emerald-500 inline-block" />Available</span>
             <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-red-500 inline-block" />{isMember ? 'Taken' : 'Occupied'}</span>
-            {!isMember && <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-amber-500 inline-block" />Reserved</span>}
+            <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-amber-500 inline-block" />Reserved</span>
             {!isMember && <span className="flex items-center gap-1.5"><span className="w-3 h-3 rounded-sm bg-yellow-400 inline-block" />Maintenance</span>}
           </div>
         </div>
@@ -1643,7 +1692,7 @@ function SlotsMap({
               <button
                 key={slot.id}
                 onClick={() => !isTaken && setDialogSlot(slot)}
-                title={slot.status === 'occupied' ? (isMember ? 'Taken' : 'Your parked vehicle') : 'Available'}
+                title={slot.status === 'occupied' ? (isMember ? 'Taken' : 'Your parked vehicle') : slot.status === 'reserved' ? (slot.reservedForEmail === memberEmail ? 'Your reserved slot' : 'Reserved') : 'Available'}
                 className={`aspect-[5/3] rounded-xl text-sm font-bold text-white shadow-sm relative slot-btn ${slotBg(slot.status)} ${isTaken ? 'cursor-default' : ''}`}
               >
                 {isTaken ? (
@@ -1655,6 +1704,9 @@ function SlotsMap({
                   slot.id
                 )}
                 {!isTaken && slot.status === 'occupied' && (
+                  <span className="absolute bottom-1 right-1 w-1.5 h-1.5 bg-white/60 rounded-full" />
+                )}
+                {!isTaken && slot.status === 'reserved' && (
                   <span className="absolute bottom-1 right-1 w-1.5 h-1.5 bg-white/60 rounded-full" />
                 )}
               </button>
@@ -1996,7 +2048,19 @@ export function ParkingSlotsView({ zones, currencySymbol, subView, members, staf
     loadSlots();
   }, [zones]);
 
-if (subView === 'analytics') return <SlotsAnalytics zones={zones} currencySymbol={currencySymbol} zoneSlots={zoneSlots} />;
+if (isMember) return <SlotsMap 
+    zones={zones} 
+    currencySymbol={currencySymbol} 
+    members={members} 
+    staff={staff}
+    zoneSlots={zoneSlots}
+    setZoneSlots={setZoneSlots}
+    loadingSlots={loadingSlots}
+    userAccess={userAccess}
+    profileName={profileName}
+    memberEmail={memberEmail}
+  />;
+  if (subView === 'analytics') return <SlotsAnalytics zones={zones} currencySymbol={currencySymbol} zoneSlots={zoneSlots} />;
   if (subView === 'vehicles') return <VehiclesViewVehicles zones={zones} zoneSlots={zoneSlots} />;
   return <SlotsMap 
     zones={zones} 

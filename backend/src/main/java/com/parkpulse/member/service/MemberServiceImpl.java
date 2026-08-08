@@ -69,6 +69,11 @@ public class MemberServiceImpl implements MemberService {
             member.setPassword(passwordEncoder.encode(member.getPassword()));
         }
 
+        // Set member back-reference on vehicles so cascade persists them
+        if (member.getVehicleList() != null) {
+            member.getVehicleList().forEach(v -> v.setMember(member));
+        }
+
         // Auto-set joinedDate if not provided
         if (member.getJoinedDate() == null || member.getJoinedDate().isEmpty()) {
             member.setJoinedDate(LocalDate.now().format(DateTimeFormatter.ofPattern("MMM d, yyyy")));
@@ -144,6 +149,12 @@ public class MemberServiceImpl implements MemberService {
             if (incomingMember.getStatus() != null) existingMember.setStatus(incomingMember.getStatus().toLowerCase());
             if (incomingMember.getJoinedDate() != null) existingMember.setJoinedDate(incomingMember.getJoinedDate());
             if (incomingMember.getVehicles() >= 0) existingMember.setVehicles(incomingMember.getVehicles());
+            if (incomingMember.getVehicleList() != null) {
+                existingMember.setVehicleList(incomingMember.getVehicleList());
+                if (incomingMember.getVehicles() <= 0) {
+                    existingMember.setVehicles(existingMember.getVehicleList().size());
+                }
+            }
 
             // Hash password if provided (only on explicit change)
             if (incomingMember.getPassword() != null && !incomingMember.getPassword().isEmpty()) {

@@ -7,7 +7,7 @@ import {
   Globe, Shield, Activity, Eye, EyeOff, ArrowRight, Lock,
   AtSign, CheckCircle2, TrendingUp, ParkingSquare, Menu, LogOut,
   UserPlus, KeyRound, Pencil, Trash2, ShieldCheck, ShieldOff,
-  CreditCard, Crown, Tag, Package, X, UserCheck, Camera, AlertTriangle, Ticket, FileText, BookMarked, RefreshCw,
+  CreditCard, Crown, Tag, Package, X, UserCheck, Camera, AlertTriangle, Ticket, FileText, BookMarked, RefreshCw, Car, QrCode,
 } from 'lucide-react';
 import { AnalyticsSection } from './components/analytics-section';
 import { ParkingSlotsView } from './components/parking-slots-view';
@@ -2386,7 +2386,7 @@ function planColor(value: string) {
 }
 
 function blankPlan(): MembershipPlan {
-  return { id: '', name: '', description: '', monthlyPrice: '9.99', annualPrice: '99.99', color: 'blue', features: [''], maxVehicles: 5, status: 'active', popular: false };
+  return { id: '', name: '', description: '', monthlyPrice: '1500', annualPrice: '15000', color: 'blue', features: [''], maxVehicles: 5, status: 'active', popular: false };
 }
 
 function PlanForm({ initial, onSave, onCancel, isNew, currencySymbol }: {
@@ -2707,6 +2707,7 @@ interface Member {
   phone?: string;
   plan: string;
   vehicles: number;
+  vehicleList?: { plate: string; vehicleType: string; make?: string; color?: string }[];
   joined: string;
   status: 'active' | 'suspended' | 'pending';
   password?: string;
@@ -3324,6 +3325,8 @@ export default function App() {
   const [memberDaysRemaining, setMemberDaysRemaining] = useState(0);
   const [memberEmail, setMemberEmail] = useState('');
   const [memberVehicles, setMemberVehicles] = useState(0);
+  const [memberQrCode, setMemberQrCode] = useState('');
+  const [memberVehicleList, setMemberVehicleList] = useState<{ plate: string; vehicleType: string; make?: string; color?: string }[]>([]);
 
   const [dashboardOccupied, setDashboardOccupied] = useState(0);
   const dashboardTotalSlots = zones.reduce((a: number, z: Zone) => a + z.totalSlots, 0);
@@ -3393,6 +3396,8 @@ export default function App() {
             setMemberDaysRemaining(Number(localStorage.getItem('memberDaysRemaining')) || 0);
             setMemberEmail(localStorage.getItem('memberEmail') || '');
             setMemberVehicles(Number(localStorage.getItem('memberVehicles')) || 0);
+            setMemberQrCode(localStorage.getItem('memberQrCode') || '');
+            try { setMemberVehicleList(JSON.parse(localStorage.getItem('memberVehicleList') || '[]') || []); } catch { setMemberVehicleList([]); }
             setActiveView('subscription');
           } else {
             setProfileName(user === 'admin' ? 'System Administrator' : user);
@@ -3507,7 +3512,7 @@ export default function App() {
                 {([
                   { id: 'analytics' as 'analytics' | 'vehicles', label: 'Analytics',  Icon: BarChart3 as typeof BarChart3 },
                   { id: 'vehicles'  as 'analytics' | 'vehicles', label: 'Vehicles',   Icon: Users     as typeof Users     },
-                ]).map(({ id, label, Icon }) => (
+                ]).filter(({ id }) => userRole !== 'MEMBER' || id === 'map').map(({ id, label, Icon }) => (
                   <button
                     key={id}
                     onClick={() => { setActiveView('slots'); setActiveSlotsSubView(id); }}
@@ -3810,7 +3815,7 @@ export default function App() {
                 zones={zones}
                 currencySymbol={currencySymbol}
                 subView={activeSlotsSubView}
-                members={members.map(m => ({ id: m.id, name: m.name, email: m.email, plan: m.plan, vehicleType: m.vehicleType }))}
+                members={members.map(m => ({ id: m.id, name: m.name, email: m.email, plan: m.plan, vehicleType: m.vehicleType, vehicleList: m.vehicleList }))}
                 staff={staff.map(s => ({ id: s.id, name: s.name, email: s.email, role: s.role, vehicleType: s.vehicleType }))}
                 userAccess={userAccess}
                 profileName={profileName}
@@ -3832,6 +3837,15 @@ export default function App() {
                     <p className="text-sm text-muted-foreground">{memberEmail}</p>
                   </div>
                 </div>
+
+                {memberQrCode && (
+                  <div className="flex flex-col items-center gap-2 mb-6 p-5 bg-muted rounded-2xl border border-border">
+                    <img src={memberQrCode} alt="Member QR Code" className="w-44 h-44 rounded-xl bg-white p-2" />
+                    <p className="text-xs text-muted-foreground flex items-center gap-1.5">
+                      <QrCode className="w-3.5 h-3.5" /> Scan to verify your membership at the gate
+                    </p>
+                  </div>
+                )}
 
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div className="bg-muted rounded-xl p-4">
@@ -3890,14 +3904,29 @@ export default function App() {
                 <div className="mt-6 pt-6 border-t border-border grid grid-cols-2 gap-4">
                   <div>
                     <p className="text-xs uppercase tracking-wider text-muted-foreground mb-1">Vehicles Registered</p>
-                    <p className="text-lg font-semibold">{memberVehicles}</p>
+                    <p className="text-lg font-semibold">{memberVehicleList.length > 0 ? memberVehicleList.length : memberVehicles}</p>
+                    {memberVehicleList.length > 0 && (
+                      <div className="mt-2 space-y-1.5">
+                        {memberVehicleList.map((v, idx) => (
+                          <div key={idx} className="flex items-center gap-2 px-3 py-2 bg-background border border-border rounded-lg">
+                            <Car className="w-4 h-4 text-blue-500 flex-shrink-0" />
+                            <div className="min-w-0">
+                              <p className="text-sm font-mono font-medium truncate">{v.plate}</p>
+                              <p className="text-xs text-muted-foreground truncate">
+                                {v.vehicleType}{[v.make, v.color].filter(Boolean).length > 0 ? ` · ${[v.make, v.color].filter(Boolean).join(' · ')}` : ''}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-end justify-end">
                     <button
                       onClick={() => setActiveView('slots')}
                       className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm font-medium transition-colors"
                     >
-                      View Parking Slots
+                      Reserve a Slot
                     </button>
                   </div>
                 </div>

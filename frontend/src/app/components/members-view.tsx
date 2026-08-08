@@ -27,6 +27,7 @@ interface Member {
   phone?: string;
   plan: string;
   vehicles: number;
+  vehicleList?: { plate: string; vehicleType: string; make?: string; color?: string }[];
   joined: string;
   status: 'active' | 'inactive' | 'suspended' | 'pending';
   password?: string;
@@ -117,6 +118,13 @@ function MemberModal({
   const [phoneLocal, setPhoneLocal] = useState(
     form.phone?.startsWith('+94') ? form.phone.slice(3).trim() : (form.phone ?? '')
   );
+  const [vehicles, setVehicles] = useState<Member['vehicleList']>(
+    form.vehicleList && form.vehicleList.length > 0
+      ? form.vehicleList.map(v => ({ ...v }))
+      : [{ plate: '', vehicleType: 'Sedan', make: '', color: '' }]
+  );
+
+  const VEHICLE_TYPES = ['Sedan', 'SUV', 'EV', 'Motorcycle', 'Truck', 'Coupe', 'Van', 'Accessible'];
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -128,6 +136,9 @@ function MemberModal({
     if (isNew && !form.password?.trim()) e.password = 'Password is required.';
     else if (isNew && (form.password?.length ?? 0) < 6) e.password = 'Password must be at least 6 characters.';
     if (!form.plan) e.plan = 'Please select a plan.';
+    const hasPlate = vehicles.some(v => v.plate.trim());
+    if (!hasPlate) e.vehicle = 'Add at least one vehicle plate.';
+    else if (vehicles.some(v => v.plate.trim() && v.plate.length < 3)) e.vehicle = 'Plates must be at least 3 characters.';
     // Validate card only if any card field is filled (on edit, card is optional)
     const cardTouched = card.holder || card.number || card.expiry || card.cvv;
     if (isNew || cardTouched) {
@@ -141,8 +152,14 @@ function MemberModal({
   };
 
   const handleSave = () => {
-    const withPhone = { ...form, phone: phoneLocal.trim() ? `+94 ${phoneLocal.trim()}` : '' };
     if (!validate()) return;
+    const cleaned = vehicles.filter(v => v.plate.trim());
+    const withPhone = {
+      ...form,
+      phone: phoneLocal.trim() ? `+94 ${phoneLocal.trim()}` : '',
+      vehicles: cleaned.length,
+      vehicleList: cleaned,
+    };
     onSave(withPhone);
   };
 
@@ -363,27 +380,89 @@ function MemberModal({
             )}
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-sm text-muted-foreground mb-1.5">Number of Vehicles</label>
-              <input
-                type="number" min={1} max={20} value={form.vehicles}
-                onChange={e => set({ vehicles: Math.max(1, Number(e.target.value)) })}
-                className="w-full bg-background text-foreground rounded-xl px-4 py-2.5 outline-none border border-border focus:border-blue-500 transition-colors text-sm"
-              />
-            </div>
-            <div>
-              <label className="block text-sm text-muted-foreground mb-1.5">Status</label>
-              <select
-                value={form.status}
-                onChange={e => set({ status: e.target.value as Member['status'] })}
-                className="w-full bg-background text-foreground rounded-xl px-4 py-2.5 outline-none border border-border focus:border-blue-500 transition-colors text-sm appearance-none"
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="block text-sm text-muted-foreground">Vehicles</label>
+              <button
+                type="button"
+                onClick={() => setVehicles(prev => [...prev, { plate: '', vehicleType: 'Sedan', make: '', color: '' }])}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border text-xs font-medium text-foreground hover:bg-muted/50 transition-colors"
               >
-                <option value="active">Active</option>
-                <option value="pending">Pending</option>
-                <option value="suspended">Suspended</option>
-              </select>
+                <Plus className="w-3.5 h-3.5" /> Add Vehicle
+              </button>
             </div>
+
+            {vehicles.map((v, idx) => (
+              <div key={idx} className="bg-background border border-border rounded-xl p-3 space-y-2">
+                <div className="flex items-center gap-2">
+                  <Car className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                  <span className="text-xs font-medium text-muted-foreground">Vehicle {idx + 1}</span>
+                  {vehicles.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => setVehicles(prev => prev.filter((_, i) => i !== idx))}
+                      className="ml-auto text-muted-foreground hover:text-red-500 transition-colors"
+                      title="Remove vehicle"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block text-xs text-muted-foreground mb-1">Plate Number <span className="text-red-500">*</span></label>
+                    <input
+                      value={v.plate}
+                      onChange={e => setVehicles(prev => prev.map((x, i) => i === idx ? { ...x, plate: e.target.value.toUpperCase() } : x))}
+                      placeholder="e.g. LD-1234"
+                      className="w-full bg-background text-foreground rounded-xl px-3 py-2 outline-none border border-border focus:border-blue-500 transition-colors text-sm font-mono placeholder:text-muted-foreground"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-muted-foreground mb-1">Vehicle Type</label>
+                    <select
+                      value={v.vehicleType}
+                      onChange={e => setVehicles(prev => prev.map((x, i) => i === idx ? { ...x, vehicleType: e.target.value } : x))}
+                      className="w-full bg-background text-foreground rounded-xl px-3 py-2 outline-none border border-border focus:border-blue-500 transition-colors text-sm appearance-none"
+                    >
+                      {VEHICLE_TYPES.map(t => <option key={t} value={t}>{t}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs text-muted-foreground mb-1">Make <span className="text-muted-foreground/50">(optional)</span></label>
+                    <input
+                      value={v.make ?? ''}
+                      onChange={e => setVehicles(prev => prev.map((x, i) => i === idx ? { ...x, make: e.target.value } : x))}
+                      placeholder="e.g. Toyota"
+                      className="w-full bg-background text-foreground rounded-xl px-3 py-2 outline-none border border-border focus:border-blue-500 transition-colors text-sm placeholder:text-muted-foreground"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs text-muted-foreground mb-1">Color <span className="text-muted-foreground/50">(optional)</span></label>
+                    <input
+                      value={v.color ?? ''}
+                      onChange={e => setVehicles(prev => prev.map((x, i) => i === idx ? { ...x, color: e.target.value } : x))}
+                      placeholder="e.g. White"
+                      className="w-full bg-background text-foreground rounded-xl px-3 py-2 outline-none border border-border focus:border-blue-500 transition-colors text-sm placeholder:text-muted-foreground"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+            {errors.vehicle && <p className="text-xs text-red-500">{errors.vehicle}</p>}
+          </div>
+
+          <div>
+            <label className="block text-sm text-muted-foreground mb-1.5">Status</label>
+            <select
+              value={form.status}
+              onChange={e => set({ status: e.target.value as Member['status'] })}
+              className="w-full bg-background text-foreground rounded-xl px-4 py-2.5 outline-none border border-border focus:border-blue-500 transition-colors text-sm appearance-none"
+            >
+              <option value="active">Active</option>
+              <option value="pending">Pending</option>
+              <option value="suspended">Suspended</option>
+            </select>
           </div>
 
           {/* Bank card details */}

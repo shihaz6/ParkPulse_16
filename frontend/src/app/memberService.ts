@@ -1,5 +1,12 @@
 import { apiRequest } from './api';
 
+export interface MemberVehicle {
+  plate: string;
+  vehicleType: string;
+  make?: string;
+  color?: string;
+}
+
 export interface Member {
   id: string;
   name: string;
@@ -8,6 +15,7 @@ export interface Member {
   phone?: string;
   plan: string;
   vehicles: number;
+  vehicleList?: MemberVehicle[];
   joined: string;
   status: 'active' | 'inactive' | 'suspended' | 'pending';
   password?: string;

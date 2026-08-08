@@ -22,7 +22,7 @@ public class ZoneSettings {
 
     private int defaultTotalSlots = 10;
     private int defaultReservedSlots = 0;
-    private double defaultRatePerHour = 10.0;
+    private double defaultRatePerHour = 150.0;
     private String defaultRateType = "Flat hourly rate";
 
     @ElementCollection(fetch = FetchType.EAGER)

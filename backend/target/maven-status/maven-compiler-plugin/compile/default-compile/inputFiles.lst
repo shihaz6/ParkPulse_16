@@ -1,3 +1,4 @@
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\reservation\model\Reservation.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\settings\model\AccessControlSettings.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\member\service\QrCodeService.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\model\GeneralSettings.java
@@ -5,6 +6,7 @@ C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\c
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\parking\repository\SpringDataZoneRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\config\StartupRunner.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\model\ParkingSession.java
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\reservation\repository\SqlReservationRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\ticket\model\VehicleType.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\member\repository\MemberRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\controller\ViewController.java
@@ -33,6 +35,8 @@ C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\c
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\staff\repository\SpringDataStaffRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\ticket\model\Ticket.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\dto\CardValidationRequest.java
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\reservation\service\ReservationService.java
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\reservation\model\ReservationStatus.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\exception\ParkPulseException.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\parking\service\ParkingServiceImpl.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\model\Zone.java
@@ -54,6 +58,7 @@ C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\c
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\exception\InvalidReportException.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\member\dto\PlanDTO.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\service\ChatServiceImpl.java
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\dto\ReportStatsDTO.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\member\service\MemberServiceImpl.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\ticket\model\Vehicle.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\exception\DataStorageException.java
@@ -62,6 +67,7 @@ C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\c
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\settings\service\ZoneSettingsServiceImpl.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\staff\service\StaffService.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\repository\GeneralSettingsRepository.java
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\dto\ReportDTO.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\report\service\ProblemReportService.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\dto\PlanDTO.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\staff\model\Staff.java
@@ -69,16 +75,19 @@ C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\c
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\report\repository\ProblemReportRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\parking\repository\SqlZoneRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\model\AbstractEntity.java
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\member\model\MemberVehicle.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\security\JwtAuthenticationFilter.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\ticket\model\TicketStatus.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\dto\GeneralSettingsDTO.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\service\CustomUserDetailsService.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\settings\controller\AccessControlSettingsController.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\service\UserService.java
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\reservation\repository\ReservationRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\parking\dto\ZoneDTO.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\service\FileStorageService.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\service\PasswordService.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\exception\ResourceNotFoundException.java
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\reservation\service\ReservationServiceImpl.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\controller\ChatController.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\parking\repository\ParkingSessionRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\parking\repository\SqlParkingSlotRepository.java
@@ -91,6 +100,7 @@ C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\c
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\ticket\repository\TicketRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\parking\repository\SpringDataParkingSlotRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\controller\PasswordController.java
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\reservation\repository\SpringDataReservationRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\parking\service\ZoneService.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\history\controller\HistoryController.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\staff\repository\SqlStaffRepository.java
@@ -98,6 +108,7 @@ C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\c
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\settings\repository\AccessControlSettingsRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\BackendApplication.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\security\JwtUtil.java
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\config\MockDataSeeder.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\history\service\HistoryServiceImpl.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\ticket\service\TicketService.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\service\UserServiceImpl.java
@@ -140,6 +151,7 @@ C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\c
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\service\AIServiceImpl.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\history\dto\HistoryFiltersDTO.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\repository\UserRepository.java
+C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\reservation\controller\ReservationController.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\dto\ZoneDTO.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\member\repository\PlanRepository.java
 C:\Users\shihaz shaheem\Desktop\MY WORKS\WD16_ PARKPULSE\backend\src\main\java\com\parkpulse\member\service\PlanServiceImpl.java

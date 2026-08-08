@@ -4,6 +4,7 @@ import com.parkpulse.dto.AuthResponse;
 import com.parkpulse.member.model.Member;
 import com.parkpulse.member.repository.SpringDataMemberRepository;
 import com.parkpulse.member.service.MemberService;
+import com.parkpulse.member.service.QrCodeService;
 import com.parkpulse.model.User;
 import com.parkpulse.security.JwtUtil;
 import com.parkpulse.staff.model.Staff;
@@ -38,6 +39,9 @@ public class AuthController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
+    @Autowired
+    private QrCodeService qrCodeService;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
@@ -86,10 +90,16 @@ public class AuthController {
             long daysRemaining = (long) subscription.get("daysRemaining");
 
             List<String> memberPerms = List.of("parking-slots", "settings-profile", "settings-password");
+            String qrCode = m.getQrCode();
+            if (qrCode == null || qrCode.isEmpty()) {
+                qrCode = qrCodeService.generateMemberQrCode(m);
+                m.setQrCode(qrCode);
+                springDataMemberRepository.save(m);
+            }
             String token = jwtUtil.generateToken(m.getUsername(), "MEMBER", m.getId(), "member", memberPerms);
             return ResponseEntity.ok(new AuthResponse(token, m.getUsername(), "MEMBER", "member", memberPerms,
                     m.getName(), m.getEmail(), m.getPlan(), m.getStatus(), m.getJoinedDate(),
-                    m.getVehicles(), billingCycle, nextRenewalDate, daysRemaining));
+                    m.getVehicles(), m.getVehicleList(), qrCode, billingCycle, nextRenewalDate, daysRemaining));
         }
 
         // 4. Neither matched

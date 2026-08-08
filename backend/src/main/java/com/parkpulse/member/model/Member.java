@@ -1,12 +1,17 @@
 package com.parkpulse.member.model;
 
 import com.parkpulse.model.AbstractEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "members")
@@ -26,6 +31,9 @@ public class Member extends AbstractEntity {
     @Lob
     @Column(columnDefinition = "TEXT")
     private String qrCode;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<MemberVehicle> vehicleList = new ArrayList<>();
 
     public Member() {
         super();
@@ -77,6 +85,17 @@ public class Member extends AbstractEntity {
 
     public String getQrCode() { return qrCode; }
     public void setQrCode(String qrCode) { this.qrCode = qrCode; }
+
+    public List<MemberVehicle> getVehicleList() { return vehicleList; }
+    public void setVehicleList(List<MemberVehicle> vehicleList) {
+        this.vehicleList = vehicleList != null ? vehicleList : new ArrayList<>();
+        this.vehicleList.forEach(v -> v.setMember(this));
+    }
+
+    public void addVehicle(MemberVehicle vehicle) {
+        vehicle.setMember(this);
+        this.vehicleList.add(vehicle);
+    }
 
     @Override
     public String toDataString() {
