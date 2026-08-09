@@ -2,201 +2,127 @@
 
 # 🅿️ ParkPulse
 
-### Full-Stack Parking Management System
+### Full-Stack Enterprise Parking Management System & AI Assistant
 
-A modern parking operations platform built to modernize and streamline day-to-day parking — from **real-time slot tracking** and **automated billing** to **membership management** and **AI-assisted support**.
+An award-winning, real-time parking operations platform built to automate day-to-day facility workflows — from **interactive slot tracking** and **automated billing** to **membership lifecycle management** and **role-gated AI analytics**.
 
 <br/>
 
-![Spring Boot](https://img.shields.io/badge/Spring%20Boot%203-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)
-![Java](https://img.shields.io/badge/Java%2017-ED8B00?style=for-the-badge&logo=java&logoColor=white)
-![React](https://img.shields.io/badge/React%2018-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Vite](https://img.shields.io/badge/Vite%206-646CFF?style=for-the-badge&logo=vite&logoColor=white)
-![Tailwind](https://img.shields.io/badge/Tailwind%20CSS-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)
-![JWT](https://img.shields.io/badge/JWT%20Auth-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white)
-![H2](https://img.shields.io/badge/H2%20DB-013C59?style=for-the-badge&logo=h2database&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+[![Award Winner](https://img.shields.io/badge/🏆_Award-Certificate_of_Excellence-gold?style=for-the-badge)](#-award--recognition)
+[![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.2.2-6DB33F?style=for-the-badge&logo=springboot&logoColor=white)](https://spring.io/projects/spring-boot)
+[![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)](https://www.oracle.com/java/)
+[![React](https://img.shields.io/badge/React-18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.0-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Groq AI](https://img.shields.io/badge/Groq_AI-Llama_3.3-f34f29?style=for-the-badge&logo=openai&logoColor=white)](https://groq.com/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
+
+<br/>
+
+[Key Features](#-features) • [System Architecture](#-system-architecture) • [Getting Started](#-getting-started) • [API Documentation](#-api-overview)
 
 </div>
 
 ---
 
-## ✨ Overview
+## 🏆 Award & Recognition
 
-ParkPulse is a full-stack parking management platform serving **two audiences**:
-
-- **Members** get a self-service experience — a 6-step registration wizard, personal QR membership passes, vehicle registration, plan selection, and booking (reserving) a spot from the live slot map.
-- **Operators & Administrators** get complete control — real-time occupancy across zones, ticketing & billing, staff administration with granular permissions, membership/plan management, reporting, analytics dashboards, and a context-aware AI assistant ("Parker").
-
-The backend follows a **Controller → Service → Repository → Model** architecture with **dual persistence**: flat-file storage for rapid prototyping and JPA/MySQL for production. Prices are displayed in **Sri Lankan Rupees (LKR)**.
+> **Award Winner:** Honored with a **Certificate of Excellence / 1st Place** for Full-Stack System Architecture, Real-Time Software Engineering, and Practical AI Integration.
 
 ---
 
-## ✨ Features
+## ✨ System Overview
+
+ParkPulse addresses real-world operational challenges in modern parking facilities by unifying physical access flows with a digital management system:
+
+- **Drivers & Members:** Access a 6-step registration wizard, ZXing-generated personal QR parking passes, subscription renewal tracking, multi-vehicle management, and real-time slot reservation capabilities.
+- **Operators & Administrators:** Control facility operations with color-coded zone occupancy maps, automated time-based ticketing, card/cash checkout processing, granular 5-tier access control, problem report resolution, and context-aware AI support.
+
+---
+
+## ✨ Features Breakdown
 
 <table align="center">
   <tr>
     <td align="center" width="33%">
-      <strong>🗺️ Live Parking Map</strong><br/>
-      Color-coded slot grids (Available / Taken / Reserved / Maintenance), 6 zones, overflow alerts, real-time occupancy.
+      <strong>🗺️ Live Interactive Map</strong><br/>
+      Color-coded slot states (Available / Taken / Reserved / Maintenance), 6 customized zones, overflow alerts, auto-release timers.
     </td>
     <td align="center" width="33%">
       <strong>🎟️ Automated Ticketing & Billing</strong><br/>
-      Time-based fee computation per vehicle type at LKR rates, card + cash (with change) checkout, full history.
+      Dynamic rate heuristics calculated per vehicle type (CAR, SUV, MOTORCYCLE, TRUCK, VAN) at LKR rates, card/cash checkout flows.
     </td>
     <td align="center" width="33%">
-      <strong>🧑‍🤝‍🧑 Memberships & Plans</strong><br/>
-      3 tiers (Basic / Professional / Premium), monthly & annual billing, multi-vehicle registration.
+      <strong>🧑‍🤝‍🧑 Memberships & QR Passes</strong><br/>
+      3 subscription tiers (Basic / Professional / Premium) with monthly/annual savings calculators and instant ZXing QR pass rendering.
     </td>
   </tr>
   <tr>
-    <td align="center" width="40%">
-      <strong>📅 Reservations</strong><br/>
-      Members reserve a slot from their registered vehicles; full life cycle: reserved → active → completed / cancelled.
+    <td align="center" width="33%">
+      <strong>🤖 Parker AI Assistant</strong><br/>
+      Context-aware Groq Llama-3.3 chatbot providing role-gated analytics queries for staff and subscription assistance for members.
     </td>
     <td align="center" width="33%">
-      <strong>🔐 Granular Access Control</strong><br/>
-      JWT (24h) auth with 5 role levels + 14 granular permissions and MFA / session / lockout settings.
+      <strong>🔐 Granular RBAC Security</strong><br/>
+      Stateless JWT authentication (HS256) supporting 5 access tiers, 14 custom permissions, session timeouts, and lockout policies.
     </td>
     <td align="center" width="33%">
-      <strong>📊 Reports & Analytics</strong><br/>
-      Occupancy, revenue, peak hours, weekly traffic and membership insights with recharts visualizations.
-    </td>
-  </tr>
-  <tr>
-    <td align="center" width="40%">
-      <strong>💬 Parker AI Assistant</strong><br/>
-      Context-aware chat answering with live slot, ticket and member data (role-scoped answers).
-    </td>
-    <td align="center" width="33%">
-      <strong>📱 QR Membership Pass</strong><br/>
-      Every member gets a scannable QR code (ZXing) used to verify membership at the gate.
-    </td>
-    <td align="center" width="33%">
-      <strong>🌍 International Readiness</strong><br/>
-      Multi-currency (LKR default), multi-timezone facility configuration, dark mode & auto-refresh.
+      <strong>📊 Recharts Analytics</strong><br/>
+      Visual dashboards for peak-hour histograms (24h), weekly traffic flows, revenue distribution, and member status breakdown.
     </td>
   </tr>
 </table>
 
 ---
 
-## 🛠️ Tech Stack
+## 🏗️ System Architecture
 
-| Layer           | Technology |
-|-----------------|------------|
-| **Backend**     | Spring Boot `3.2.2`, Java `17`, Spring Security + JWT `0.11.5`, Spring Data JPA, ModelMapper |
-| **Frontend**    | React `18`, TypeScript, Vite `6`, Tailwind CSS `4`, shadcn/ui (Radix), recharts |
-| **Database**    | H2 (file-based, default), MySQL (production profile) |
-| **Persistence** | Layered dual-storage: JPA repositories + flat-file / in-memory fallbacks |
-| **Libraries**   | iText 7 (report generation), ZXing (QR codes), Groq (AI chat) |
+ParkPulse implements a **layered SOLID pattern** on the backend paired with a **dual-persistence storage engine** and an asynchronous SPA client on the frontend.
 
----
+```mermaid
+graph TD;
+    %% Client Layer
+    subgraph Frontend ["React 18 SPA (Vite + Tailwind v4)"]
+        UI[State-based Navigation]
+        Axios[Axios API Client + JWT Interceptor]
+        UI --> Axios
+    end
 
-## 🚀 Getting Started
+    %% Security & API Layer
+    subgraph Security ["Spring Security & API Layer"]
+        Filter[JwtAuthenticationFilter]
+        AuthCtrl[Auth / User Controllers]
+        PreAuth["@PreAuthorize Method Security"]
+        Axios -->|HTTP Requests / Bearer JWT| Filter
+        Filter --> PreAuth
+        PreAuth --> AuthCtrl
+    end
 
-### Prerequisites
+    %% Service Layer
+    subgraph Business ["Service Layer"]
+        ParkService[Parking Service]
+        TicketService[Ticket & Fee Engine]
+        AIService[Parker AI Service]
+        AuthCtrl --> ParkService
+        AuthCtrl --> TicketService
+        AuthCtrl --> AIService
+    end
 
-- **Java 17+**
-- **Node.js 18+** and npm
+    %% External Integration
+    Groq[Groq API / Llama 3.3] <--> AIService
 
-### 1. Start the Backend
+    %% Persistence Layer
+    subgraph Storage ["Dual Persistence Engine"]
+        JPA[Spring Data JPA Repositories]
+        FlatFile[Thread-Safe ReadWrite Lock File Repositories]
+        ParkService --> JPA
+        ParkService --> FlatFile
+        TicketService --> JPA
+    end
 
-```bash
-cd backend
-mvnw.cmd spring-boot:run
-```
-
-> The backend runs on **`http://localhost:8080`** using an H2 file database (automatically seeded on first run).
-> **H2 console:** `http://localhost:8080/h2-console`
->
-> **Using MySQL instead?** Create the database (see `backend/src/main/resources/init-mysql.sql`), then enable the profile:
-> ```bash
-> mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=mysql
-> ```
-
-### 2. Start the Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-The Vite dev server starts at **`http://localhost:5173`**.
-
----
-
-## 🔑 Default Accounts
-
-| Role                    | Username            | Password     | Access                           |
-|-------------------------|---------------------|--------------|----------------------------------|
-| 👑 **Admin**            | `admin`             | `admin123`   | Full system access              |
-| 👷 **Staff (15)**       | `staff1` … `staff15` | `staff123`   | Per assigned access level        |
-| 👤 **Members (30)**     | `member1` … `member30` | `member123` | Member portal & self-service |
-
----
-
-## 🗂️ Seed Data
-
-On first boot the system seeds a realistic dataset (deterministic, `Random(42)`):
-
-| Data                    | Details |
-|-------------------------|-------------|
-| 🅿️ **Zones**            | 6 zones · **45 slots** · LKR rates 150–250/hr (EV & Valet premium) |
-| 💳 **Plans** | Basic රු1,500/mo · Professional රු3,000/mo · Premium රු5,000/mo |
-| 👤 **Members** | 30 members, 1–3 registered vehicles each |
-| 👷 **Staff** | 15 staff across all access levels |
-| 📋 **Tickets** | ~60 tickets (45 finished / 15 ongoing) |
-| 📅 **Reservations** | 25 with mixed statuses |
-| 🚗 **Sessions** | ~150 hourly-occupancy sessions across 7 days |
-
-The seeder is **idempotent** — on subsequent boots it only repairs slot states, backfills member vehicles, and refreshes rates/prices to current LKR values.
-
----
-
-## 🛡️ Roles & Permissions
-
-| Access Level | Capabilities |
-|--------------|--------------|
-| **admin** | Everything (`*`) |
-| **manager** | Dashboard, analytics, reports, tickets, parking, staff & member management, all settings |
-| **operator** | Dashboard, parking slots, tickets |
-| **viewer** | Read-only dashboard |
-| **member** | Self-service: reserve slots, manage profile/password, view subscription & QR |
-| **custom** | Fine-grained custom permission checklists |
-
----
-
-## 🔌 API Overview
-
-| Base Path            | Purpose |
-|----------------------|--------------------|
-| `/api/auth`          | Login (admin / staff / member), verify & change password |
-| `/api/parking`       | Slots, zones, sessions, peak hours, checkout |
-| `/api/reservations`  | Reservation create / check-in / complete / cancel |
-| `/api/tickets`       | Ticket records, filters, checkout |
-| `/api/members`       | Member CRUD, suspend/activate, QR code |
-| `/api/plans`         | Plan CRUD + savings calculation |
-| `/api/staff`         | Staff CRUD, avatars, access levels |
-| `/api/reports`       | Report generation, stats, download |
-| `/api/settings`      | General, security, zones, access-control, history |
-| `/api/chat`          | Parker AI assistant (JWT-authenticated) |
-| `/api/payments`      | Card validation (Luhn) & username availability |
-
----
-
-## 📝 Notes
-
-- **AI Assistant:** Requires an optional `AI_API_KEY` (OpenAI-compatible). When unset, the chat responds with a helpful "not configured" message.
-- **Rates:** All parking and plan pricing is in **Sri Lankan Rupees (LKR)** — historical tickets keep their recorded amounts.
-- **Docs:** A detailed feature inventory lives in [`docs/SYSTEM_OVERVIEW.md`](docs/SYSTEM_OVERVIEW.md).
-
----
-
-<div align="center">
-
-**Built with 💙 for the WD16 team — ParkPulse**
-
-</div>
+    subgraph DB ["Databases"]
+        H2[(H2 Database - Dev)]
+        MySQL[(MySQL - Production)]
+        JPA --> H2
+        JPA --> MySQL
+    end
