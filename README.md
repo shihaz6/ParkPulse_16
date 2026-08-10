@@ -4,9 +4,9 @@
 
 # ParkPulse
 
-### Full-Stack Enterprise Parking Management System & AI Assistant
+### Full-Stack Parking Management System & AI Assistant
 
-An award-winning, real-time parking operations platform built to automate day-to-day facility workflows — from **interactive slot tracking** and **automated billing** to **membership lifecycle management** and **role-gated AI analytics**.
+ParkPulse is a real-time parking operations platform for managing slots, tickets, memberships, billing, and staff workflows in one place. It combines a Spring Boot backend, a React frontend, and an AI assistant to support both operators and members.
 
 <br/>
 
@@ -34,10 +34,21 @@ An award-winning, real-time parking operations platform built to automate day-to
 
 ## System Overview
 
-ParkPulse addresses real-world operational challenges in modern parking facilities by unifying physical access flows with a digital management system:
+ParkPulse addresses real-world operational challenges in modern parking facilities by unifying physical access flows with a digital management system.
 
-- **Drivers & Members:** Access a 6-step registration wizard, ZXing-generated personal QR parking passes, subscription renewal tracking, multi-vehicle management, and real-time slot reservation capabilities.
-- **Operators & Administrators:** Control facility operations with color-coded zone occupancy maps, automated time-based ticketing, card/cash checkout processing, granular 5-tier access control, problem report resolution, and context-aware AI support.
+### For Drivers & Members
+- 6-step registration wizard
+- ZXing-generated personal QR parking passes
+- Subscription renewal tracking
+- Multi-vehicle management
+- Real-time slot reservation
+
+### For Operators & Administrators
+- Color-coded zone occupancy maps
+- Automated time-based ticketing
+- Card and cash checkout processing
+- Granular role-based access control
+- Operational monitoring and reporting
 
 ---
 
@@ -51,7 +62,7 @@ ParkPulse addresses real-world operational challenges in modern parking faciliti
     </td>
     <td align="center" width="33%">
       <strong>Automated Ticketing & Billing</strong><br/>
-      Dynamic rate heuristics calculated per vehicle type (CAR, SUV, MOTORCYCLE, TRUCK, VAN) at LKR rates, card/cash checkout flows.
+      Dynamic rate calculations by vehicle type (CAR, SUV, MOTORCYCLE, TRUCK, VAN), with card/cash checkout flows.
     </td>
     <td align="center" width="33%">
       <strong>Memberships & QR Passes</strong><br/>
@@ -78,7 +89,7 @@ ParkPulse addresses real-world operational challenges in modern parking faciliti
 
 ## System Architecture
 
-ParkPulse implements a **layered SOLID pattern** on the backend paired with a **dual-persistence storage engine** and an asynchronous SPA client on the frontend.
+ParkPulse implements a layered backend architecture paired with a dual-persistence storage engine and an asynchronous SPA client on the frontend.
 
 ```mermaid
 graph TD;
@@ -122,3 +133,53 @@ graph TD;
         JPA --> H2
         JPA --> MySQL
     end
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+- Java 17+
+- Node.js 18+
+- npm
+- MySQL (for production use)
+
+### Backend
+```bash
+./mvnw spring-boot:run
+```
+
+### Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+### Configuration
+Set any required environment variables before running the app, including:
+- database connection settings
+- JWT secret
+- Groq API key
+
+---
+
+## Default Credentials
+
+> Add the default demo/admin credentials here so new users can log in quickly.
+
+| Role | Username | Password | Notes |
+| --- | --- | --- | --- |
+| Admin | `admin` | `admin123` | Replace with your actual default values |
+| Operator | `operator` | `operator123` | Replace with your actual default values |
+| Member | `member` | `member123` | Replace with your actual default values |
+
+---
+
+## Suggested Next Improvements
+
+- Add screenshots or a demo GIF for the dashboard and AI assistant.
+- Document environment variables in a dedicated section.
+- Add API docs or Swagger/OpenAPI links.
+- Add a Contributing section and license information.
