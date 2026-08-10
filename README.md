@@ -177,9 +177,4 @@ Set any required environment variables before running the app, including:
 
 ---
 
-## Suggested Next Improvements
 
-- Add screenshots or a demo GIF for the dashboard and AI assistant.
-- Document environment variables in a dedicated section.
-- Add API docs or Swagger/OpenAPI links.
-- Add a Contributing section and license information.
